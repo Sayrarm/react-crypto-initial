@@ -12,6 +12,6 @@ export function fetchAssets() {
     return new Promise( resolve => {
         setTimeout( () => {
             resolve(cryptoAssets)
-        }, 1) //поменять на 2000
+        }, 2) //поменять на 2000
     })
 }
