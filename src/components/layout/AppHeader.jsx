@@ -1,4 +1,4 @@
-import {Layout, Select, Space, Button} from "antd";
+import {Layout, Select, Space, Button, Modal} from "antd";
 import {useCrypto} from "../../context/crypto-context.jsx";
 import {useEffect, useState} from "react";
 
@@ -14,6 +14,7 @@ const headerStyle = {
 
 export default function AppHeader() {
     const [select, setSelect] = useState(false)
+    const [isModalOpen, setIsModalOpen, setModal] = useState(false)
     const { crypto } = useCrypto()
     const [selectedValue, setSelectedValue] = useState("press / to open")
 
@@ -31,7 +32,19 @@ export default function AppHeader() {
         console.log(value)
         setSelectedValue(option.label)
         setSelect(false)
+        showModal(true)
     }
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
 
     return (
         <Layout.Header style={headerStyle}>
@@ -59,6 +72,17 @@ export default function AppHeader() {
             />
 
             <Button type="primary">Primary Button</Button>
+
+            <Modal
+                closable={{ 'aria-label': 'Custom Close Button' }}
+                open={isModalOpen}
+                onCancel={handleCancel}
+                footer={null}
+            >
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
         </Layout.Header>
     )
 }
