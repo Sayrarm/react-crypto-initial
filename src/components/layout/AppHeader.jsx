@@ -1,6 +1,7 @@
 import {Layout, Select, Space, Button, Modal} from "antd";
 import {useCrypto} from "../../context/crypto-context.jsx";
 import {useEffect, useState} from "react";
+import CoinInfoModal from "../CoinInfoModal.jsx";
 
 const headerStyle = {
     width: "100%",
@@ -14,7 +15,8 @@ const headerStyle = {
 
 export default function AppHeader() {
     const [select, setSelect] = useState(false)
-    const [isModalOpen, setIsModalOpen, setModal] = useState(false)
+    const [coin, setCoin] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const { crypto } = useCrypto()
     const [selectedValue, setSelectedValue] = useState("press / to open")
 
@@ -29,7 +31,7 @@ export default function AppHeader() {
     }, [])
 
     function handleSelect(value, option) {
-        console.log(value)
+        setCoin(crypto.find(c => c.id === value))
         setSelectedValue(option.label)
         setSelect(false)
         showModal(true)
@@ -37,9 +39,6 @@ export default function AppHeader() {
 
     const showModal = () => {
         setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -79,9 +78,9 @@ export default function AppHeader() {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                <CoinInfoModal
+                    coin={coin}
+                />
             </Modal>
         </Layout.Header>
     )
