@@ -1,5 +1,6 @@
 import {Layout, Select, Space, Button} from "antd";
 import {useCrypto} from "../../context/crypto-context.jsx";
+import {useEffect, useState} from "react";
 
 const headerStyle = {
     width: "100%",
@@ -11,47 +12,32 @@ const headerStyle = {
     alignItems: 'center',
 };
 
-const options = [
-    {
-        label: 'Happy',
-        value: 'happy',
-        emoji: '😄',
-        desc: 'Feeling Good',
-    },
-    {
-        label: 'Sad',
-        value: 'sad',
-        emoji: '😢',
-        desc: 'Feeling Blue',
-    },
-    {
-        label: 'Angry',
-        value: 'angry',
-        emoji: '😡',
-        desc: 'Furious',
-    },
-    {
-        label: 'Cool',
-        value: 'cool',
-        emoji: '😎',
-        desc: 'Chilling',
-    },
-    {
-        label: 'Sleepy',
-        value: 'sleepy',
-        emoji: '😴',
-        desc: 'Need Sleep',
-    },
-];
-
 export default function AppHeader() {
+    const [select, setSelect] = useState(false)
     const { crypto } = useCrypto()
+
+    useEffect(() => {
+        const keypress = event => {
+            if (event.key === '/') {
+                setSelect((prev) => !prev)
+            }
+        }
+        document.addEventListener("keypress", keypress)
+        return () => document.removeEventListener('keypress', keypress)
+    }, [])
+
+    function handleSelect(value) {
+        console.log(value)
+    }
+
     return (
         <Layout.Header style={headerStyle}>
             <Select
-                mode="multiple"
                 style={{width: '250px'}}
-                placeholder="press / to open"
+                open={select}
+                onSelect={handleSelect}
+                onClick={() => setSelect((prev) => !prev)}
+                value="press / to open"
                 options={ crypto.map(coin => ({
                     label: coin.name,
                     value: coin.id,
