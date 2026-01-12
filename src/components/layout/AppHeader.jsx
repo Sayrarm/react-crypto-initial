@@ -15,6 +15,7 @@ const headerStyle = {
 export default function AppHeader() {
     const [select, setSelect] = useState(false)
     const { crypto } = useCrypto()
+    const [selectedValue, setSelectedValue] = useState("press / to open")
 
     useEffect(() => {
         const keypress = event => {
@@ -26,8 +27,10 @@ export default function AppHeader() {
         return () => document.removeEventListener('keypress', keypress)
     }, [])
 
-    function handleSelect(value) {
+    function handleSelect(value, option) {
         console.log(value)
+        setSelectedValue(option.label)
+        setSelect(false)
     }
 
     return (
@@ -37,7 +40,7 @@ export default function AppHeader() {
                 open={select}
                 onSelect={handleSelect}
                 onClick={() => setSelect((prev) => !prev)}
-                value="press / to open"
+                value={selectedValue}
                 options={ crypto.map(coin => ({
                     label: coin.name,
                     value: coin.id,
