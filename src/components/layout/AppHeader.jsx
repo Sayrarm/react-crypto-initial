@@ -18,7 +18,7 @@ export default function AppHeader() {
     const [select, setSelect] = useState(false)
     const [coin, setCoin] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [drawer, setDrawer] = useState(true)
+    const [drawer, setDrawer] = useState(false)
     const {crypto} = useCrypto()
     const [selectedValue, setSelectedValue] = useState("press / to open")
 
@@ -97,7 +97,7 @@ export default function AppHeader() {
                 open={drawer}
                 destroyOnHidden
             >
-                <AddAssetForm/>
+                <AddAssetForm onClose={() => setDrawer(false)} />
             </Drawer>
         </Layout.Header>
     )
