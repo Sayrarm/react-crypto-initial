@@ -1,5 +1,7 @@
 import {Layout, Typography} from "antd";
 import {useCrypto} from "../../context/crypto-context.jsx";
+import PortfolioChart from "../PortfolioChart.jsx";
+import AssetsTable from "../AssetsTable.jsx";
 
 const contentStyle = {
     textAlign: 'center',
@@ -23,6 +25,8 @@ export default function AppContent() {
                 Portfolio: { ' ' }
                 {assets.map(asset => asset.amount * cryptoPriceMap[asset.id]).reduce((acc, v) => (acc += v), 0).toFixed(2)}$
             </Typography.Title>
+            <PortfolioChart/>
+            <AssetsTable />
         </Layout.Content>
     )
 }
