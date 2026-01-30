@@ -8,6 +8,7 @@ const contentStyle = {
     minHeight: 'calc(100vh - 60px)',
     color: '#fff',
     backgroundColor: '#001529',
+    padding: '1rem',
 };
 
 
@@ -21,12 +22,14 @@ export default function AppContent() {
 
     return (
         <Layout.Content style={contentStyle}>
-            <Typography.Title level={3} style={{textAlign: 'left', color: '#fff'}}>
+            <Typography.Title level={3} style={{textAlign: 'left', color: '#fff', marginTop: 'auto'}}>
                 Portfolio: { ' ' }
                 {assets.map(asset => asset.amount * cryptoPriceMap[asset.id]).reduce((acc, v) => (acc += v), 0).toFixed(2)}$
             </Typography.Title>
             <PortfolioChart/>
-            <AssetsTable />
+            <div style={{ margin: '1rem' }}>
+                <AssetsTable />
+            </div>
         </Layout.Content>
     )
 }
